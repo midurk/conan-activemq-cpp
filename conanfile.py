@@ -5,14 +5,14 @@ from conans import ConanFile, AutoToolsBuildEnvironment, tools
 import os, tempfile
 
 
-class AcitveMqCmsConan(ConanFile):
-    name = "activemq-cms"
+class AcitvemqCppConan(ConanFile):
+    name = "activemq-cpp"
     version = "3.9.4"
     description = "CMS (stands for C++ Messaging Service) is a JMS-like API for C++ for interfacing with Message Brokers such as Apache ActiveMQ."
 
     topics = ("messaging", "queue", "activemq")
 
-    url = "https://github.com/midurk/activemq-cms"
+    url = "https://github.com/midurk/activemq-cpp"
     homepage = "http://activemq.apache.org/cms"
     author = "Michal Durkovic <michal.durkovic@innovatrics.com>"
     license = "Apache-2.0"
@@ -38,8 +38,8 @@ class AcitveMqCmsConan(ConanFile):
 
     def source(self):
         source_url = "http://tux.rainside.sk/apache/activemq"
-        tools.get("{0}/activemq-cpp/{1}/activemq-cpp-library-{1}-src.tar.gz".format(source_url, self.version), sha256="7390b0266baf1291e66b34b9a52770de7cbdb26dab4217b4921cbc220ef4b08f")
-        extracted_dir = "activemq-cpp-library-" + self.version
+        tools.get("{0}/{1}/{2}/{1}-library-{2}-src.tar.gz".format(source_url, self.name, self.version), sha256="7390b0266baf1291e66b34b9a52770de7cbdb26dab4217b4921cbc220ef4b08f")
+        extracted_dir = "{0}-library-{1}".format(self.name, self.version)
 
         os.rename(extracted_dir, self._source_subfolder)
 
@@ -69,4 +69,4 @@ class AcitveMqCmsConan(ConanFile):
 
     def package_info(self):
         self.cpp_info.libs = tools.collect_libs(self)
-        self.cpp_info.includedirs = [ os.path.join("include", "activemq-cpp-{0}".format(self.version)) ]
+        self.cpp_info.includedirs = [ os.path.join("include", "{0}-{1}".format(self.name, self.version)) ]
